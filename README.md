@@ -8,11 +8,11 @@ GPAW project: https://wiki.fysik.dtu.dk/gpaw/index.html
 
 Also using:
 
-- OpenMPI (libopenmpi-dev)
-- BLAS (libopenblas-dev)
-- LAPACK (liblapack-dev)
-- SCALAPACK (libscalapack-openmpi-dev)
-- libxc (libxc-dev)
+- OpenMPI (Ubuntu libopenmpi-dev)
+- OpenBLAS (Ubuntu libopenblas-dev)
+- LAPACK (Ubuntu liblapack-dev)
+- ScaLAPACK (Ubuntu libscalapack-openmpi-dev)
+- libxc (Ubuntu libxc-dev)
 - fftw (built from source)
 - libvdwxc (built from source)
 - elpa (built from source)
@@ -27,7 +27,7 @@ https://hub.docker.com/repository/docker/stephey/gpaw
 docker pull stephey/gpaw:1.0
 ```
 
-# Testing continaer locally
+# Testing container locally
 
 ```
 docker run --rm -it --user 500 -cap-add=SYS_PTRACE stephey/gpaw:1.0 /bin/bash
@@ -41,8 +41,8 @@ docker run --rm -it --user 500 -cap-add=SYS_PTRACE stephey/gpaw:1.0 /bin/bash
 
 # Making changes
 
-You can see the Dockerfile for the build instructions. If you edit the
-Dockerfile, you'll need to rebuild the container with something like:
+You can see the `Dockerfile` for the build instructions. If you edit the
+`Dockerfile`, you'll need to rebuild the container with something like:
 
 ```
 docker build -t stephey/gpaw:1.0 .
@@ -50,9 +50,9 @@ docker build -t stephey/gpaw:1.0 .
 
 You can name and tag the container however you like.
 
-The Dockerfile requires the siteconfig.py file to be alongside the Dockerfile
+The `Dockerfile` requires the `siteconfig.py` file to be alongside the `Dockerfile`
 at build time. It copies this file into the container and uses it to make
-configuration adjustments.
+sure GPAW can find all the libraries it needs.
 
 If you make edits, you'll want to push the container to dockerhub and pull it
 onto Cori. It's somewhat large so it may take a while to push (1-2 hours
@@ -70,4 +70,6 @@ shifterimg pull docker:stephey/gpaw:1.0
 You'll run the container on Cori using Shifter (very much like Docker but
 without root privileges.)
 
-How to use shifter: https://docs.nersc.gov/development/shifter/how-to-use/
+How to use Shifter: https://docs.nersc.gov/development/shifter/how-to-use/
+
+
