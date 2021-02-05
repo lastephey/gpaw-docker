@@ -8,10 +8,10 @@ GPAW project: https://wiki.fysik.dtu.dk/gpaw/index.html
 
 Also using:
 
-- OpenMPI (Ubuntu libopenmpi-dev)
+- MPICH (built from source)
 - OpenBLAS (Ubuntu libopenblas-dev)
 - LAPACK (Ubuntu liblapack-dev)
-- ScaLAPACK (Ubuntu libscalapack-openmpi-dev)
+- ScaLAPACK (Ubuntu libscalapack-mpich-dev)
 - libxc (Ubuntu libxc-dev)
 - fftw (built from source)
 - libvdwxc (built from source)
@@ -30,7 +30,7 @@ docker pull stephey/gpaw:1.0
 # Testing container locally
 
 ```
-docker run --rm -it --user 500 -cap-add=SYS_PTRACE stephey/gpaw:1.0 /bin/bash
+docker run --rm -it --user 500 --cap-add=SYS_PTRACE stephey/gpaw:1.0 /bin/bash
 ```
 
 `/bin/bash` will open a bash shell inside the container for interactive testing
