@@ -1,10 +1,10 @@
-FROM ubuntu:20.04
+FROM ubuntu:20.4
 
 RUN mkdir build
 
 WORKDIR /build
 
-#ubuntu 20.04 bugfix
+ubuntu 20.04 bugfix
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN \
@@ -39,18 +39,17 @@ RUN \
 
 RUN /sbin/ldconfig
 
-RUN ln -s /usr/bin/gfortran /usr/bin/g77
-
 #scalapack and elpa need blacs
+#just copy in our edited Bmake.inc
 RUN \
     wget http://www.netlib.org/blacs/mpiblacs.tgz && \
     tar -xzvf mpiblacs.tgz && \
     wget http://www.netlib.org/blacs/mpiblacs-patch03.tgz && \
-    tar -xzvf mpiblacs-patch03.tgz && \
-    cd /build/BLACS/BMAKES && \
-    cp Bmake.MPI-LINUX ../Bmake.inc && \
-    cd /build/BLACS/TESTING && \
-    make
+    tar -xzvf mpiblacs-patch03.tgz
+
+ADD Bmake.inc /build/BLACS/Bmake.inc
+
+RUN cd /build/BLACS/TESTING && make
 
 ####scalapack
 ####apparently openmpi 4.0+ is broken in scalapack, here's a patch
@@ -88,7 +87,7 @@ RUN \
     wget https://elpa.mpcdf.mpg.de/html/Releases/2020.11.001/elpa-2020.11.001.tar.gz      && \
     tar -xvf elpa-2020.11.001.tar.gz                                                 && \
     cd elpa-2020.11.001                                                              && \
-    ./configure CC="mpicc" --ax --prefix=/build/elpa-2020.11.001 && \
+    ./configure CC="mpicc" --disable-sse --disable-avx --disable-avx2 --disable-avx512 --prefix=/build/elpa-2020.11.001 && \
     make -j 2 && make install
 
 #alias python3 to python
